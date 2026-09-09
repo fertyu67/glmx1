@@ -9,14 +9,14 @@ WORKDIR /src
 
 # Dependencies first, so a source-only edit does not re-download the module graph.
 COPY go.mod go.sum ./
-RUN --mount=type=cache,id=go-pkg-mod,target=/go/pkg/mod go mod download
+RUN --mount=type=cache,id=cacheKey-go-pkg-mod,target=/go/pkg/mod go mod download
 
 COPY . .
 
 # CGO stays off: modernc.org/sqlite is pure Go, so the binaries are static.
 ENV CGO_ENABLED=0 GOOS=linux
-RUN --mount=type=cache,id=go-pkg-mod,target=/go/pkg/mod \
-    --mount=type=cache,id=go-build-cache,target=/root/.cache/go-build \
+RUN --mount=type=cache,id=cacheKey-go-pkg-mod,target=/go/pkg/mod \
+    --mount=type=cache,id=cacheKey-go-build-cache,target=/root/.cache/go-build \
     go build -trimpath -ldflags="-s -w" -o /out/zai-api . \
  && go build -trimpath -ldflags="-s -w" -o /out/token-collector ./cmd/token-collector
 
