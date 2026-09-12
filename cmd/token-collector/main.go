@@ -44,7 +44,7 @@ import (
 const (
 	MaxTokens       = 20000
 	UnsafeMaxTokens = 50000
-	DefaultTokens   = 5000
+	DefaultTokens   = 150
 	DefaultBatch    = 5
 	MaxBatch        = 9
 	UnsafeMaxBatch  = 25
