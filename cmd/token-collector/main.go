@@ -44,23 +44,12 @@ import (
 const (
 	MaxTokens       = 20000
 	UnsafeMaxTokens = 50000
+	DefaultTokens   = 150
 	DefaultBatch    = 5
 	MaxBatch        = 9
 	UnsafeMaxBatch  = 25
 	SendWaitMs      = 15000
 	MaxRetries      = 3
-)
-
-// Ubah const menjadi var agar nilainya bisa diubah runtime
-var DefaultTokens = 150
-
-func init() {
-	if val := os.Getenv("DEFAULT_TOKENS"); val != "" {
-		if parsed, err := strconv.Atoi(val); err == nil && parsed > 0 {
-			DefaultTokens = parsed
-		}
-	}
-}
 
 	// The page setup dominates a run; generating a token is a local call in the
 	// captcha bundle, so the budget is a fixed floor plus a per-token allowance
